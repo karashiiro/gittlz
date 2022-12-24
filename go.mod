@@ -1,4 +1,4 @@
-module github.com/karashiiro/ditz
+module github.com/karashiiro/gittlz
 
 go 1.19
 

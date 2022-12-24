@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/karashiiro/ditz/pkg/protocol"
+	"github.com/karashiiro/gittlz/pkg/protocol"
 	"github.com/spf13/cobra"
 )
 

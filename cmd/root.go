@@ -8,14 +8,14 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "ditz",
+	Use:   "gittlz",
 	Short: "A zero-maintenance Git server for high-maintenance people.",
-	Long: `Ditz is a thin wrapper around the Git server that enables quick
-setup and teardown of a managed Git environment. Use Ditz when
+	Long: `gittlz is a thin wrapper around the Git server that enables quick
+setup and teardown of a managed Git environment. Use gittlz when
 you want to test tools that interact with managed Git providers
 such as GitHub and GitLab.
 
-To spin up a no-auth Git server, just run "ditz serve".`,
+To spin up a no-auth Git server, just run "gittlz serve".`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -32,7 +32,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.ditz.yaml)")
+	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gittlz.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

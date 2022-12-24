@@ -7,7 +7,7 @@ RUN apk add --no-cache git
 COPY go.mod go.sum /go/src/app/
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go mod download
 COPY ./ /go/src/app/
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -v -o /go/src/app/ditz
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -v -o /go/src/app/gittlz
 
 # Run stage
 FROM alpine:3.17.0
@@ -16,8 +16,8 @@ FROM alpine:3.17.0
 RUN apk add --no-cache git
 RUN apk add --no-cache git-daemon
 
-COPY --from=builder /go/src/app/ditz /usr/bin/ditz
-LABEL Name=ditz
+COPY --from=builder /go/src/app/gittlz /usr/bin/gittlz
+LABEL Name=gittlz
 
 EXPOSE 22
 EXPOSE 80
@@ -26,4 +26,4 @@ EXPOSE 9418
 # Repo directory
 VOLUME /srv/git
 
-CMD ["/usr/bin/ditz", "serve"]
+CMD ["/usr/bin/gittlz", "serve"]
