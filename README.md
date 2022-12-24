@@ -30,10 +30,24 @@ gittlz comes preconfigured with no authentication whatsoever. However, the follo
 
 * (todo) SSH password authentication
 * (todo) SSH key authentication
+* HTTP URL authentication
 * HTTP basic authentication
-* (todo) HTTP URL authentication
 
 This covers the majority of authentication schemes used by Git hosting providers.
+
+### HTTP URL authentication
+See [HTTP basic authentication](#http-basic-authentication). The same setup applies, but the username and
+password can be embedded in the URL:
+
+```sh
+git clone http://gitt:lz@localhost/repo.git
+```
+
+This authentication scheme is both insecure and deprecated by many clients. Some Git clients will even
+silently strip the credentials out of the URL. cURL automatically converts it into an `Authorization`
+header.
+
+Be prepared to debug issues yourself.
 
 ### HTTP basic authentication
 Start the server with a command override, replacing the port mapping, username, and password options as needed:
