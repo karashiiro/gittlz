@@ -10,8 +10,16 @@ If all you need is a no-auth Git *remote* (not necessarily a server), consider t
 Ditz requires no configuration by default - just point a Git client at it and get started.
 
 ```sh
-docker run command here
+docker run --rm -it -p 9418:9418 karashiiro/ditz:latest
 ```
+
+If you want to use a persistent directory for repositories, mount it to `/srv/git`:
+
+```sh
+docker run --rm -it -v /path/to/repos:/srv/git:rw -p 9418:9418 karashiiro/ditz:latest
+```
+
+Then, you can clone repositories from a Git client outside the container:
 
 ```sh
 git clone git://localhost/repo.git
@@ -20,10 +28,10 @@ git clone git://localhost/repo.git
 ## Authentication
 Ditz comes preconfigured with no authentication whatsoever. However, the following forms of authentication are configurable:
 
-* SSH password authentication
-* SSH key authentication
+* (todo) SSH password authentication
+* (todo) SSH key authentication
 * HTTP basic authentication
-* HTTP URL authentication
+* (todo) HTTP URL authentication
 
 This covers the majority of authentication schemes used by Git hosting providers.
 
@@ -31,7 +39,7 @@ This covers the majority of authentication schemes used by Git hosting providers
 Start the server with a command override, replacing the port mapping, username, and password options as needed:
 
 ```sh
-docker run --rm -it -p 80:80 ditz ditz serve --protocol=http --username=ditz --password=y
+docker run --rm -it -p 80:80 karashiiro/ditz:latest ditz serve --protocol=http --username=ditz --password=y
 ```
 
 Then, make sure to base64-encode the username and password somewhere locally. Most operating systems and shells
