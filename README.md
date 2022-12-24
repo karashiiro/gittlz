@@ -1,5 +1,5 @@
 # (WIP) Ditz
-A zero-maintenance Git server container for high-maintenance people. Suitable for random experiments, projects you don't
+A zero-maintenance Git server for high-maintenance people. Suitable for random experiments, projects you don't
 care about losing, and integration testing.
 
 ## Do you need Ditz?
