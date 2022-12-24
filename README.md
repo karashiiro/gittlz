@@ -22,7 +22,28 @@ Ditz comes preconfigured with no authentication whatsoever. However, the followi
 
 * SSH password authentication
 * SSH key authentication
-* HTTP header authentication
+* HTTP basic authentication
 * HTTP URL authentication
 
 This covers the majority of authentication schemes used by Git hosting providers.
+
+### HTTP basic authentication
+Start the server with a command override, replacing the port mapping, username, and password options as needed:
+
+```sh
+docker run --rm -it -p 80:80 ditz ditz serve --protocol=http --username=ditz --password=y
+```
+
+Then, make sure to base64-encode the username and password somewhere locally. Most operating systems and shells
+have a means of doing this. In Powershell, for example:
+
+```powershell
+$DitzAuth = "ditz:y"
+$B64DitzAuth = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($DitzAuth))
+```
+
+Finally, add the `http.extraHeader` option to all of your Git commands:
+
+```sh
+git -c http.extraHeader="Authorization: Basic $B64DitzAuth" clone http://localhost/repo.git
+```

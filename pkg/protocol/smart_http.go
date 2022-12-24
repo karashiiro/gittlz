@@ -2,6 +2,7 @@ package protocol
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/cgi"
 	"os/exec"
@@ -20,6 +21,8 @@ func StartSmartHTTP(port int, projectRoot, username, password string) error {
 	}
 
 	auth := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.Method, r.RequestURI)
+
 		// No authentication configured
 		if username == "" && password == "" {
 			gitService.ServeHTTP(w, r)
