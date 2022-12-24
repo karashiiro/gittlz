@@ -14,7 +14,7 @@ docker run command here
 ```
 
 ```sh
-git clone command here
+git clone git://localhost/repo.git
 ```
 
 ## Authentication
