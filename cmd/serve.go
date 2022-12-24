@@ -9,6 +9,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var Username string
+var Password string
 var Protocol string
 
 // serveCmd represents the serve command
@@ -35,9 +37,15 @@ var serveCmd = &cobra.Command{
 			if err != nil {
 				log.Fatalf("Git server failed unexpectedly: %v", err)
 			}
-		case "http":
+		case "http": // Doesn't support URL-encoded auth
 			log.Println("Git server started on port 80")
-			err := protocol.StartSmartHTTP(cwd)
+			err := protocol.StartSmartHTTP(80, cwd, Username, Password)
+			if err != nil {
+				log.Fatalf("Git server failed unexpectedly: %v", err)
+			}
+		case "https":
+			log.Println("Git server started on port 443")
+			err := protocol.StartSmartHTTP(443, cwd, Username, Password)
 			if err != nil {
 				log.Fatalf("Git server failed unexpectedly: %v", err)
 			}
@@ -51,5 +59,7 @@ var serveCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(serveCmd)
 
-	serveCmd.Flags().StringVarP(&Protocol, "protocol", "p", "git", "Git server protocol")
+	serveCmd.Flags().StringVarP(&Protocol, "protocol", "P", "git", "Git server protocol")
+	serveCmd.Flags().StringVarP(&Username, "username", "u", "", "Git username for authentication")
+	serveCmd.Flags().StringVarP(&Password, "password", "p", "", "Git password for authentication")
 }

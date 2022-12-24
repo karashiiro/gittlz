@@ -1,2 +1,5 @@
+.vscode
+*.exe
+
 repo.git
 workspace
