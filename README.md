@@ -96,7 +96,9 @@ docker kill gittlz
 ```
 
 ### Using Gittlz in GitHub Actions
-An example workflow file is available [here](.github/workflows/example.yml).
+An example workflow file is available [here](.github/workflows/example.yml). Gittlz can be used via
+[service containers](https://docs.github.com/en/actions/using-containerized-services/about-service-containers) on
+Linux runners. Using Gittlz on other runners requires [containerless](#containerless) setup.
 
 ## Authentication
 Gittlz comes preconfigured with no authentication whatsoever. All of the optional authentication methods provided
