@@ -50,6 +50,14 @@ on the server. To create a new bare repository, run:
 git init --bare repo.git
 ```
 
+Also create an empty `git-daemon-export-ok` file inside of the repository, so that Git knows it
+can serve the repository freely:
+
+```sh
+cd repo.git
+touch git-daemon-export-ok
+```
+
 Then, you can clone repositories from a Git client outside the container:
 
 ```sh
