@@ -49,7 +49,7 @@ Repositories should be [bare repositories](https://git-scm.com/book/en/v2/Git-on
 on the server. The Gittlz CLI abstracts away this setup process:
 
 ```sh
-CGO_ENABLED=0 go install github.com/karashiiro/gittlz:v0.3.0
+CGO_ENABLED=0 go install github.com/karashiiro/gittlz@v0.3.0
 gittlz create-repo repo
 ```
 
@@ -163,11 +163,11 @@ The Gittlz container attempts to abstract configuration as much as possible, wit
 maintainability or debuggability. However, Gittlz is also just a CLI application, and can be built
 and run in other environments.
 
-Building Gittlz from sources is simple, just disable `cgo` (optional) and build it like any other
+Building Gittlz from sources is simple, just disable `cgo` (optional) and install it like any other
 Go application. In `sh`-like shells, this is done as follows:
 
 ```sh
-CGO_ENABLED=0 go build
+CGO_ENABLED=0 go install github.com/karashiiro/gittlz@v0.3.0
 ```
 
 Gittlz has runtime dependencies on the standard `git` toolkit and `git-http-backend`. `git-http-backend`
