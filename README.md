@@ -1,4 +1,4 @@
-# (WIP) Gittlz
+# Gittlz
 A zero-maintenance Git server for the laziest people. Suitable for random experiments, projects you don't
 care about losing, and integration testing.
 
