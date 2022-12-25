@@ -77,7 +77,7 @@ jobs:
       - docker
     services:
       gittlz:
-        image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-dirty-ci:latest
+        image: ghcr.io/karashiiro/gittlz-dirty-ci:latest
         ports:
           - 9418:9418
     steps:
