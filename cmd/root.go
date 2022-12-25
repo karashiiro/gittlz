@@ -6,6 +6,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var BasePath string
+var Path string
+var Hostname string
+var ApiPort int
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gittlz",
@@ -33,6 +38,10 @@ func init() {
 	// will be global for your application.
 
 	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gittlz.yaml)")
+	rootCmd.PersistentFlags().StringVar(&Hostname, "host", "0.0.0.0", "The hostname to run the servers on.")
+	rootCmd.PersistentFlags().IntVar(&ApiPort, "api-port", 6177, "The port to run the control API server on.")
+	rootCmd.PersistentFlags().StringVar(&BasePath, "base-path", "/srv/git", "Base path for the Git repositories directory. This acts a prefix removed from --path.")
+	rootCmd.PersistentFlags().StringVar(&Path, "path", "/srv/git", "Full path for the Git repositories directory.")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

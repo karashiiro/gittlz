@@ -50,14 +50,14 @@ func (wh *Waiter) Wait() error {
 	return nil
 }
 
-func StartSSH(port int, path, password string) (*Waiter, error) {
+func StartSSH(host string, port int, path, password string) (*Waiter, error) {
 	b := &gitBackend{git.ReadWriteAccess}
 
 	// Create the SSH server
 	s, err := wish.NewServer(
 		ssh.PublicKeyAuth(pkAuth),
 		ssh.PasswordAuth(passwordAuth(password != "", password)),
-		wish.WithAddress(fmt.Sprintf(":%d", port)),
+		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
 		wish.WithMiddleware(
 			git.Middleware(path, b),
 			logging.Middleware(),
@@ -71,7 +71,7 @@ func StartSSH(port int, path, password string) (*Waiter, error) {
 	done := make(chan os.Signal, 1)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
-		if err = s.ListenAndServe(); err != nil {
+		if err := s.ListenAndServe(); err != nil {
 			fmt.Printf("%v\n", err)
 			os.Exit(1)
 		}

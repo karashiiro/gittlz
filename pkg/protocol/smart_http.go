@@ -8,7 +8,7 @@ import (
 	"os/exec"
 )
 
-func StartSmartHTTP(port int, projectRoot, username, password string) error {
+func StartSmartHTTP(host string, port int, projectRoot, username, password string) error {
 	git, err := exec.LookPath("git")
 	if err != nil {
 		return fmt.Errorf("exec.LookPath: %w", err)
@@ -48,5 +48,5 @@ func StartSmartHTTP(port int, projectRoot, username, password string) error {
 		}
 	})
 
-	return http.ListenAndServe(fmt.Sprintf(":%d", port), auth)
+	return http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), auth)
 }
