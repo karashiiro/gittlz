@@ -9,12 +9,13 @@ A Git server for the laziest of us. Write and test your Git utilities without an
 
 - [Gittlz](#gittlz)
   - [Do you need Gittlz?](#do-you-need-gittlz)
-  - [Setup](#setup)
+  - [Usage](#usage)
   - [Authentication](#authentication)
     - [SSH password authentication](#ssh-password-authentication)
     - [SSH key authentication](#ssh-key-authentication)
     - [HTTP URL authentication](#http-url-authentication)
     - [HTTP basic authentication](#http-basic-authentication)
+  - [Containerless](#containerless)
 
 ## Do you need Gittlz?
 If all you need is a no-auth Git *remote* (not necessarily a server), consider trying Git's
@@ -28,8 +29,8 @@ production server in any form. If that's what you were looking for, try [Gitea](
 This will likely be repeated several times throughout this documentation:
 *Do not use Gittlz as a production Git server.*
 
-## Setup
-Gittlz requires no configuration by default - just point a Git client at it and get started.
+## Usage
+Gittlz requires no configuration by default - just point a Git client at it and get started:
 
 ```sh
 docker run --rm -it -p 9418:9418 karashiiro/gittlz:latest
@@ -53,6 +54,13 @@ Then, you can clone repositories from a Git client outside the container:
 ```sh
 git clone git://localhost/repo.git
 ```
+
+And that's it! Enjoy your Gittlz.
+
+The Gittlz [Docker image](https://hub.docker.com/repository/docker/karashiiro/gittlz) makes this setup process
+nearly as simple as it can be. The image is based on Alpine Linux, but it includes a full Git installation, which
+can be used to manually perform operations inside the container. `sh` is available as a basic shell for manual
+repository setup, if needed.
 
 ## Authentication
 Gittlz comes preconfigured with no authentication whatsoever. All of the optional authentication methods provided
@@ -145,3 +153,22 @@ Finally, add the `http.extraHeader` option to all of your Git commands:
 ```sh
 git -c http.extraHeader="Authorization: Basic $B64gittlzAuth" clone http://localhost/repo.git
 ```
+
+## Containerless
+The Gittlz container attempts to abstract configuration as much as possible, without sacrificing
+maintainability or debuggability. However, Gittlz is also just a CLI application, and can be built
+and run in other environments.
+
+Building Gittlz from sources is simple, just disable `cgo` (optional) and build it like any other
+Go application. In `sh`-like shells, this is done as follows:
+
+```sh
+CGO_ENABLED=0 go build
+```
+
+Gittlz has runtime dependencies on the standard `git` toolkit and `git-http-backend`. `git-http-backend`
+is a CGI script sometimes offered as part of a separate `git-daemon` package. For Windows users,
+[Git for Windows](https://gitforwindows.org) includes everything needed in a single installer.
+
+Refer to the `--help` commands such as `gittlz --help` and `gittlz serve --help` for configuration
+options.
