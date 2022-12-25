@@ -64,6 +64,7 @@ jobs:
       gittlz:
         image: ghcr.io/karashiiro/gittlz-dirty-ci:latest
         ports:
+          - 6177:6177
           - 9418:9418
     steps:
     - uses: actions/checkout@v3
