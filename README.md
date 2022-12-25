@@ -181,7 +181,7 @@ options.
 Git's server functionality is mostly usable out of the box, and the official handbook even dedicates
 an entire [chapter](https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols) to describing how
 to configure and use it. However, that's more configuration than anyone should want to do if they only
-want a disposable Git server, and don't care about security at all.
+want a disposable HTTP or SSH Git server, and don't care about security at all.
 
 With this being the case, Gittlz is just a very thin wrapper around Git itself, with the exception of
 the handling for the SSH protocol. Each protocol has a different strategy used to wrap it.
