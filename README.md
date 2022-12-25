@@ -16,6 +16,7 @@ A Git server for the laziest of us. Write and test your Git utilities without an
     - [HTTP URL authentication](#http-url-authentication)
     - [HTTP basic authentication](#http-basic-authentication)
   - [Containerless](#containerless)
+  - [Architecture](#architecture)
 
 ## Do you need Gittlz?
 If all you need is a no-auth Git *remote* (not necessarily a server), consider trying Git's
@@ -172,3 +173,21 @@ is a CGI script sometimes offered as part of a separate `git-daemon` package. Fo
 
 Refer to the `--help` commands such as `gittlz --help` and `gittlz serve --help` for configuration
 options.
+
+## Architecture
+Git's server functionality is mostly usable out of the box, and the official handbook even dedicates
+an entire [chapter](https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols) to describing how
+to configure and use it. However, that's more configuration than anyone should want to do if they only
+want a disposable Git server, and don't care about security at all.
+
+With this being the case, Gittlz is just a very thin wrapper around Git itself, with the exception of
+the handling for the SSH protocol. Each protocol has a different strategy used to wrap it.
+
+| Protocol | Strategy                                                                                                                                                                                                                                                  |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Git      | `git daemon` is launched as a subprocess. That's it.                                                                                                                                                                                                      |
+| HTTP     | [`net/http/cgi`](https://pkg.go.dev/net/http/cgi) (yes, that's part of the Go standard library) is used to interface with `git-http-backend`. Gittlz adds some authentication middleware to simulate a typical managed Git provider.                      |
+| SSH      | [charmbracelet/wish](https://github.com/charmbracelet/wish) is used to set up a simple SSH server in front of Git. Gittlz's implementation is almost an exact copy of Wish's [Git example](https://github.com/charmbracelet/wish/tree/main/examples/git). |
+
+The [`serve`](https://github.com/karashiiro/gittlz/blob/main/cmd/serve.go) command is used to select
+which protocol is used at runtime.
