@@ -15,6 +15,7 @@ A Git server for the laziest of us. Write and test your Git utilities without an
   - [Usage](#usage)
   - [Examples](#examples)
     - [Setting up a cloneable repo over HTTP with basic auth](#setting-up-a-cloneable-repo-over-http-with-basic-auth)
+    - [Using Gittlz in GitHub Actions](#using-gittlz-in-github-actions)
   - [Authentication](#authentication)
     - [SSH password authentication](#ssh-password-authentication)
     - [SSH key authentication](#ssh-key-authentication)
@@ -93,6 +94,9 @@ git -c http.extraHeader="Authorization: Basic Z2l0dDpseg==" clone http://localho
 # (Optional) Delete the Gittlz instance, and all of the data on it
 docker kill gittlz
 ```
+
+### Using Gittlz in GitHub Actions
+An example workflow file is available [here](.github/workflows/example.yml).
 
 ## Authentication
 Gittlz comes preconfigured with no authentication whatsoever. All of the optional authentication methods provided
