@@ -1,6 +1,5 @@
 # Gittlz
-A zero-maintenance Git server for the laziest people. Suitable for random experiments, projects you don't
-care about losing, and integration testing.
+A simple Git server for the laziest people. Hack on it, destroy it, and test against it.
 
 ## Do you need Gittlz?
 If all you need is a no-auth Git *remote* (not necessarily a server), consider trying Git's
