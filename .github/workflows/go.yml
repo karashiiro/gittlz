@@ -32,6 +32,7 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
+    permissions: write-all
     outputs:
       tags: ${{ steps.meta.outputs.tags }}
     steps:
