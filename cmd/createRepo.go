@@ -32,27 +32,27 @@ var createRepoCmd = &cobra.Command{
 
 		buf, err := json.Marshal(params)
 		if err != nil {
-			fmt.Printf("Failed to parse arguments: %v", err)
+			fmt.Printf("Failed to parse arguments: %v\n", err)
 			os.Exit(1)
 		}
 
 		reader := new(bytes.Buffer)
 		_, err = reader.Write(buf)
 		if err != nil {
-			fmt.Printf("Failed to process arguments: %v", err)
+			fmt.Printf("Failed to process arguments: %v\n", err)
 			os.Exit(1)
 		}
 
 		res, err := http.Post(fmt.Sprintf("http://%s:%d/repo", Hostname, ApiPort), "application/json", reader)
 		if err != nil {
-			fmt.Printf("Failed to complete operation: %v", err)
+			fmt.Printf("Failed to complete operation: %v\n", err)
 			os.Exit(1)
 		}
 		defer res.Body.Close()
 
 		resBytes, err := ioutil.ReadAll(res.Body)
 		if err != nil {
-			fmt.Printf("Failed to read response data: %v", err)
+			fmt.Printf("Failed to read response data: %v\n", err)
 			os.Exit(1)
 		}
 

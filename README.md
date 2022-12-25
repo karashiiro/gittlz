@@ -34,20 +34,21 @@ This will likely be repeated several times throughout this documentation:
 Gittlz requires no configuration by default - just point a Git client at it and get started:
 
 ```sh
-docker run --rm -it -p 9418:9418 karashiiro/gittlz:latest
+docker run --rm -it --name=gittlz -p 6177:6177 -p 9418:9418 karashiiro/gittlz:latest
 ```
 
 If you want to use a persistent directory for repositories, mount it to `/srv/git`:
 
 ```sh
-docker run --rm -it -v /path/to/repos:/srv/git:rw -p 9418:9418 karashiiro/gittlz:latest
+docker run --rm -it --name=gittlz -v /path/to/repos:/srv/git:rw -p 6177:6177 -p 9418:9418 karashiiro/gittlz:latest
 ```
 
 Repositories should be [bare repositories](https://git-scm.com/book/en/v2/Git-on-the-Server-Getting-Git-on-a-Server)
-on the server. To create a new bare repository, run:
+on the server. The Gittlz CLI abstracts away this setup process:
 
 ```sh
-git init --bare repo.git
+CGO_ENABLED=0 go install github.com/karashiiro/gittlz:v0.3.0
+gittlz create-repo repo
 ```
 
 Then, you can clone repositories from a Git client outside the container:
@@ -82,7 +83,7 @@ This covers the majority of authentication schemes used by Git hosting providers
 Start the server with a command override, replacing the port mapping and password options as needed:
 
 ```sh
-docker run --rm -it -p 22:22 karashiiro/gittlz:latest gittlz serve --protocol=ssh --password=password
+docker run --rm -it -p 6177:6177 -p 22:22 karashiiro/gittlz:latest gittlz serve --protocol=ssh --password=password
 ```
 
 Then, clone repositories by providing the password interactively:
@@ -103,7 +104,7 @@ SSH key auth failures, open an issue describing your intended workflow.
 Start the server with a command override, replacing the port mapping as needed:
 
 ```sh
-docker run --rm -it -p 22:22 karashiiro/gittlz:latest gittlz serve --protocol=ssh
+docker run --rm -it -p 6177:6177 -p 22:22 karashiiro/gittlz:latest gittlz serve --protocol=ssh
 ```
 
 Then, clone repositories with a Git client:
@@ -138,7 +139,7 @@ Be prepared to debug issues yourself.
 Start the server with a command override, replacing the port mapping, username, and password options as needed:
 
 ```sh
-docker run --rm -it -p 80:80 karashiiro/gittlz:latest gittlz serve --protocol=http --username=gitt --password=lz
+docker run --rm -it -p 6177:6177 -p 80:80 karashiiro/gittlz:latest gittlz serve --protocol=http --username=gitt --password=lz
 ```
 
 Then, make sure to base64-encode the username and password somewhere locally. Most operating systems and shells
@@ -191,3 +192,5 @@ the handling for the SSH protocol. Each protocol has a different strategy used t
 
 The [`serve`](https://github.com/karashiiro/gittlz/blob/main/cmd/serve.go) command is used to select
 which protocol is used at runtime.
+
+Finally, a control API is put on top for simpler repository creation within the container.
