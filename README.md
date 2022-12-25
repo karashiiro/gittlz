@@ -19,6 +19,13 @@ If you want to use a persistent directory for repositories, mount it to `/srv/gi
 docker run --rm -it -v /path/to/repos:/srv/git:rw -p 9418:9418 karashiiro/gittlz:latest
 ```
 
+Repositories should be [bare repositories](https://git-scm.com/book/en/v2/Git-on-the-Server-Getting-Git-on-a-Server)
+on the server. To create a new bare repository, run:
+
+```sh
+git init --bare repo.git
+```
+
 Then, you can clone repositories from a Git client outside the container:
 
 ```sh
@@ -28,12 +35,27 @@ git clone git://localhost/repo.git
 ## Authentication
 gittlz comes preconfigured with no authentication whatsoever. However, the following forms of authentication are configurable:
 
-* (todo) SSH password authentication
+* SSH password authentication
 * (todo) SSH key authentication
 * HTTP URL authentication
 * HTTP basic authentication
 
 This covers the majority of authentication schemes used by Git hosting providers.
+
+### SSH password authentication
+Start the server with a command override, replacing the port mapping and password options as needed:
+
+```sh
+docker run --rm -it -p 22:22 karashiiro/gittlz:latest gittlz serve --protocol=git --password=password
+```
+
+Then, clone repositories by providing the password interactively:
+
+```sh
+git clone ssh://localhost/repo.git
+# Cloning into 'repo'...
+# you@localhost's password: password
+```
 
 ### HTTP URL authentication
 See [HTTP basic authentication](#http-basic-authentication). The same setup applies, but the username and

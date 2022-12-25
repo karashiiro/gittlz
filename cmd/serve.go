@@ -40,6 +40,18 @@ var serveCmd = &cobra.Command{
 			if err != nil {
 				log.Fatalf("Git server failed unexpectedly: %v", err)
 			}
+		case "ssh":
+			wh, err := protocol.StartSSH(22, Path, Password)
+			if err != nil {
+				log.Fatalf("Failed to start Git server: %v", err)
+			}
+
+			log.Println("Git server started on port 22")
+
+			err = wh.Wait()
+			if err != nil {
+				log.Fatalf("Git server failed unexpectedly: %v", err)
+			}
 		default:
 			fmt.Printf("Unknown protocol: %s\n", Protocol)
 			os.Exit(1)
