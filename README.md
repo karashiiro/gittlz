@@ -1,4 +1,10 @@
 # Gittlz
+[![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/karashiiro/gittlz)](https://github.com/karashiiro/gittlz/blob/main/go.mod)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/karashiiro/gittlz/go.yml)](https://github.com/karashiiro/gittlz/actions/workflows/go.yml)
+[![GitHub](https://img.shields.io/github/license/karashiiro/gittlz)](https://github.com/karashiiro/gittlz/blob/main/LICENSE)
+[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/karashiiro/gittlz)](https://hub.docker.com/repository/docker/karashiiro/gittlz)
+[![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/karashiiro/gittlz)](https://hub.docker.com/repository/docker/karashiiro/gittlz)
+
 A Git server for the laziest of us. Write and test your Git utilities without any hassle.
 
 - [Gittlz](#gittlz)
