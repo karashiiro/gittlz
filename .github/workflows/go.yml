@@ -38,6 +38,8 @@ jobs:
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
+    outputs:
+      tags: ${{ steps.meta.outputs.tags }}
     steps:
     - uses: actions/checkout@v3
     # Install the cosign tool except on PR
@@ -82,7 +84,7 @@ jobs:
       - docker
     services:
       gittlz:
-        image: ghcr.io/karashiiro/gittlz-dirty
+        image: ghcr.io/${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-dirty:${{ needs.docker.outputs.tags[0] }}
         ports:
           - 9418:9418
     steps:
