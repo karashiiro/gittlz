@@ -19,7 +19,8 @@ var Protocol string
 var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Start the Git server",
-	Long:  `Starts the Git server.`,
+	Long: `Starts the Git server. By default, this uses the Git
+server protocol, which has no authentication scheme.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		switch Protocol {
 		case "git":
@@ -62,9 +63,9 @@ var serveCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(serveCmd)
 
-	serveCmd.Flags().StringVarP(&Protocol, "protocol", "P", "git", "Git server protocol")
-	serveCmd.Flags().StringVarP(&Username, "username", "u", "", "Git username for authentication")
-	serveCmd.Flags().StringVarP(&Password, "password", "p", "", "Git password for authentication")
-	serveCmd.Flags().StringVar(&BasePath, "base-path", "/srv/git", "Base path for Git repos directory (removes this prefix from URLs)")
-	serveCmd.Flags().StringVar(&Path, "path", "/srv/git", "Full path for Git repos directory")
+	serveCmd.Flags().StringVarP(&Protocol, "protocol", "P", "git", "Git server protocol. Valid options: \"git\", \"http\", \"ssh\".")
+	serveCmd.Flags().StringVarP(&Username, "username", "u", "", "Git username for authentication. Leave this empty to disable the username.")
+	serveCmd.Flags().StringVarP(&Password, "password", "p", "", "Git password for authentication. Leave this empty to disable the password.")
+	serveCmd.Flags().StringVar(&BasePath, "base-path", "/srv/git", "Base path for the Git repositories directory. This acts a prefix removed from --path.")
+	serveCmd.Flags().StringVar(&Path, "path", "/srv/git", "Full path for the Git repositories directory.")
 }
