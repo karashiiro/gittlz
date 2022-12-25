@@ -11,22 +11,33 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
-
     - name: Build
       run: go build -v ./...
-
     - name: Test
       run: go test -v ./...
 
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
     - name: Build Docker image
-      run: docker build . --file Dockerfile --tag gittlz:$(date +%s)
+      run: docker build . --file Dockerfile --tag gittlz:ci
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      gittlz:
+        image: gittlz:ci # Use the container image available locally
+        ports:
+          - 9418:9418
+    steps:
+    - uses: actions/checkout@v3
+    # TODO
