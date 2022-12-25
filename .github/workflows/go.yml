@@ -26,3 +26,6 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - name: Build Docker image
+      run: docker build . --file Dockerfile --tag gittlz:$(date +%s)
