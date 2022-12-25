@@ -57,10 +57,7 @@ jobs:
         cache-to: type=gha,mode=max
 
   test:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     needs:
       - build-service
     services:
