@@ -62,7 +62,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     needs:
-      - docker
+      - build-service
     services:
       gittlz:
         image: ghcr.io/karashiiro/gittlz-dirty-ci:latest
