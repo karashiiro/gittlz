@@ -11,7 +11,10 @@ A Git server for the laziest of us. Write and test your Git utilities without an
 
 - [Gittlz](#gittlz)
   - [Do you need Gittlz?](#do-you-need-gittlz)
+  - [Prerequisites](#prerequisites)
   - [Usage](#usage)
+  - [Examples](#examples)
+    - [Setting up a cloneable repo over HTTP with basic auth](#setting-up-a-cloneable-repo-over-http-with-basic-auth)
   - [Authentication](#authentication)
     - [SSH password authentication](#ssh-password-authentication)
     - [SSH key authentication](#ssh-key-authentication)
@@ -32,17 +35,23 @@ production server in any form. If that's what you were looking for, try [Gitea](
 This will likely be repeated several times throughout this documentation:
 *Do not use Gittlz as a production Git server.*
 
+## Prerequisites
+Have the following software installed before using Gittlz:
+
+- Docker (to run the container)
+- Go v1.19+ (to build/install the CLI)
+
 ## Usage
 Gittlz requires no configuration by default - just point a Git client at it and get started:
 
 ```sh
-docker run --rm -it --name=gittlz -p 6177:6177 -p 9418:9418 karashiiro/gittlz:latest
+docker run --rm -it -p 6177:6177 -p 9418:9418 karashiiro/gittlz:latest
 ```
 
 If you want to use a persistent directory for repositories, mount it to `/srv/git`:
 
 ```sh
-docker run --rm -it --name=gittlz -v /path/to/repos:/srv/git:rw -p 6177:6177 -p 9418:9418 karashiiro/gittlz:latest
+docker run --rm -it -v /path/to/repos:/srv/git:rw -p 6177:6177 -p 9418:9418 karashiiro/gittlz:latest
 ```
 
 Repositories should be [bare repositories](https://git-scm.com/book/en/v2/Git-on-the-Server-Getting-Git-on-a-Server)
@@ -65,6 +74,25 @@ The Gittlz [Docker image](https://hub.docker.com/repository/docker/karashiiro/gi
 nearly as simple as it can be. The image is based on Alpine Linux, but it includes a full Git installation, which
 can be used to manually perform operations inside the container. `sh` is available as a basic shell for manual
 repository setup, if needed.
+
+## Examples
+These are some common workflows using Gittlz, provided with minimal commentary and as few assumptions as possible.
+These examples use Git Bash, and may need to be adjusted to work in other shells. The Gittlz CLI is assumed to be
+installed before running these examples.
+
+### Setting up a cloneable repo over HTTP with basic auth
+```bash
+# Create the Gittlz instance with persistent data, and detach it from the shell
+docker run --rm -it -d --name=gittlz -p 6177:6177 -p 80:80 karashiiro/gittlz:latest gittlz serve --protocol=http --username=gitt --password=lz
+# Create a repository on the server called "example.git"
+gittlz create-repo example
+# Base64-encode the username:password pair
+echo -n "gitt:lz" | base64 # Z2l0dDpseg==
+# Clone the repository
+git -c http.extraHeader="Authorization: Basic Z2l0dDpseg==" clone http://localhost:80/example.git
+# (Optional) Delete the Gittlz instance, and all of the data on it
+docker kill gittlz
+```
 
 ## Authentication
 Gittlz comes preconfigured with no authentication whatsoever. All of the optional authentication methods provided
