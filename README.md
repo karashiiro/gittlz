@@ -1,6 +1,15 @@
 # Gittlz
 A Git server for the laziest of us. Write and test your Git utilities without any hassle.
 
+- [Gittlz](#gittlz)
+  - [Do you need Gittlz?](#do-you-need-gittlz)
+  - [Setup](#setup)
+  - [Authentication](#authentication)
+    - [SSH password authentication](#ssh-password-authentication)
+    - [SSH key authentication](#ssh-key-authentication)
+    - [HTTP URL authentication](#http-url-authentication)
+    - [HTTP basic authentication](#http-basic-authentication)
+
 ## Do you need Gittlz?
 If all you need is a no-auth Git *remote* (not necessarily a server), consider trying Git's
 [Local protocol](https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols#_local_protocol) first.
