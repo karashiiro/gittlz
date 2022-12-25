@@ -1,5 +1,5 @@
 # Gittlz
-A simple Git server for the laziest people. Hack on it, destroy it, and test against it.
+A Git server for the laziest of us. Write and test your Git utilities without any hassle.
 
 ## Do you need Gittlz?
 If all you need is a no-auth Git *remote* (not necessarily a server), consider trying Git's
