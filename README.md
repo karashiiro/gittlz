@@ -83,7 +83,7 @@ installed before running these examples.
 
 ### Setting up a cloneable repo over HTTP with basic auth
 ```bash
-# Create the Gittlz instance with persistent data, and detach it from the shell
+# Create the Gittlz instance with non-persistent data, and detach it from the shell
 docker run --rm -it -d --name=gittlz -p 6177:6177 -p 80:80 karashiiro/gittlz:latest gittlz serve --protocol=http --username=gitt --password=lz
 # Create a repository on the server called "example.git"
 gittlz create-repo example
