@@ -7,8 +7,6 @@
 
 A Git server for the laziest of us. Write and test your Git utilities without any hassle.
 
-*Gittlz is still in active development. Expect some issues while using it.*
-
 - [Gittlz](#gittlz)
   - [Do you need Gittlz?](#do-you-need-gittlz)
   - [Prerequisites](#prerequisites)
